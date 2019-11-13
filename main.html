@@ -1,0 +1,35 @@
+<html>
+  <head></head>
+  <body>
+    <h1>main</h1>
+    <button class="getAuth">get auth</button>
+    <button class="getPrivate">get private</button>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      document.querySelector(".getAuth").addEventListener("click", () => {
+        axios
+          .post("/login", {
+            user_id: "kihyun0402",
+            user_pw: "123123"
+          })
+          .then(response => {
+            console.log(response.data.access_token);
+            axios.defaults.headers.common.authorization =
+              response.data.access_token;
+          });
+      });
+      document.querySelector(".getPrivate").addEventListener("click", () => {
+        axios.get("/private").then(response => {
+          console.log(response.data);
+        });
+
+        // 매번 직접 박아주기  ( 위에처럼 default 설정하는게 훨씬 편함 )
+        // axios.get("/private", {
+        //   headers: {
+        //     authorization: "test token~~~~~"
+        //   }
+        // });
+      });
+    </script>
+  </body>
+</html>
